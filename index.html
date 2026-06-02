@@ -605,32 +605,6 @@ button{cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;border:none;
 </div>
 
 <script>
-// ── CAPTEUR D'ERREUR GLOBAL (script séparé : capte aussi les erreurs de syntaxe du script principal) ──
-window.addEventListener('error', function(ev){
-  try{
-    var b=document.getElementById('__errbar');
-    if(!b){
-      b=document.createElement('div');
-      b.id='__errbar';
-      b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#b91c1c;color:#fff;font:12px/1.4 monospace;padding:10px;white-space:pre-wrap;word-break:break-word;max-height:50vh;overflow:auto';
-      (document.body||document.documentElement).appendChild(b);
-    }
-    var msg=ev.message||(ev.error&&ev.error.message)||'erreur inconnue';
-    var src=(ev.filename||'')+':'+(ev.lineno||'?')+':'+(ev.colno||'?');
-    b.textContent='⚠ Erreur JS : '+msg+'\n'+src+'\n(fais une capture et envoie-la)';
-  }catch(_){}
-});
-window.addEventListener('unhandledrejection', function(ev){
-  try{
-    var b=document.getElementById('__errbar')||document.createElement('div');
-    b.id='__errbar';
-    b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#b91c1c;color:#fff;font:12px/1.4 monospace;padding:10px;white-space:pre-wrap';
-    if(!b.parentNode)(document.body||document.documentElement).appendChild(b);
-    b.textContent='⚠ Promesse rejetée : '+((ev.reason&&ev.reason.message)||ev.reason||'?');
-  }catch(_){}
-});
-</script>
-<script>
 // ════════════════════════════════════════════════════════════
 //  PUZZLES NINTENDO — FAITS À LA MAIN
 //  Format: tableau 2D de 1 (rempli) et 0 (vide)

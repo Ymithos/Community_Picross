@@ -1,0 +1,55 @@
+# ════════════════════════════════════════════════════════════
+#  FICHIER DE CONFIGURATION — Picross AP (Archipelago)
+# ════════════════════════════════════════════════════════════
+#  Remplace "TonNom" par ton pseudo de joueur (un par participant).
+#  Chaque joueur fournit SON propre fichier .yaml à l'hôte qui génère.
+#  Les lignes commençant par # sont des commentaires (ignorées).
+# ────────────────────────────────────────────────────────────
+
+name: TonNom                       # Ton pseudo dans la partie (unique par joueur)
+description: Partie Picross AP
+game: Picross AP
+
+Picross AP:
+
+  # ── BUT DE LA PARTIE ──
+  # puzzles_only  : terminer tous les tableaux
+  # stickers_only : débloquer tous les stickers
+  # all           : les deux
+  goal: puzzles_only
+
+  # ── MONDES INCLUS (on/off) ──
+  include_bonus_world: true        # Monde bonus (Sonic)
+  include_special_world: true      # Monde spécial (puzzles personnalisés)
+  include_special_easy: true       # Catégorie Facile du monde spécial
+  include_special_medium: true     # Catégorie Moyen
+  include_special_hard: true       # Catégorie Difficile
+  include_special_ultra: true      # Catégorie Ultra
+
+  # ── INDICES ──
+  include_hint_checks: true        # Ajoute des checks "indice" à trouver
+  hint_item_count: 20              # Nombre d'objets Indice dans le pool (0 à 60)
+
+  # ── PIÈGES ──
+  trap_percentage: 15              # % d'objets de remplissage qui sont des pièges (0 à 100)
+
+  # ── DÉBLOCAGE DES TABLEAUX ──
+  starting_unlocks: 5              # Tableaux ouverts au départ (1 à 197)
+
+  # unlock_mode :
+  #   ordered : débloque les tableaux dans l'ordre fixe
+  #   random  : chaque Progressive Unlock ouvre un tableau AU HASARD
+  unlock_mode: random
+
+  shuffle_world_order: false       # Mélanger l'ordre d'apparition des 10 mondes Nintendo
+
+  # ── OPTIONS AVANCÉES ARCHIPELAGO (laisser tel quel si tu débutes) ──
+  progression_balancing: disabled
+  accessibility: full
+  local_items: []
+  non_local_items: []
+  start_inventory: {}
+  start_hints: []
+  start_location_hints: []
+  exclude_locations: []
+  priority_locations: []
