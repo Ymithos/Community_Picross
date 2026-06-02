@@ -551,6 +551,56 @@ button{cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;border:none;
 </div>
 
 <!-- OVERLAY ÉDITEUR DE NONOGRAMME -->
+<div id="submit-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.86);align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto">
+  <div style="background:var(--panel);border:1px solid var(--accent);border-radius:16px;padding:18px 16px;max-width:460px;width:100%;box-shadow:0 0 40px rgba(91,140,255,.3);margin:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <h2 style="font-size:15px;color:var(--accent);font-family:'Syne',sans-serif;font-weight:800">🌍 Soumettre à la communauté</h2>
+      <button onclick="editorCloseSubmit()" style="background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div id="submit-solve-msg" style="font-size:11px;font-family:'DotGothic16',monospace;margin-bottom:10px;min-height:14px"></div>
+    <label style="font-size:11px;color:var(--muted);font-family:'DotGothic16',monospace;display:block;margin-bottom:4px">Ton pseudo (laisse vide pour rester Anonyme)</label>
+    <input id="submit-author" type="text" maxlength="30" placeholder="Anonyme" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text);padding:9px;font-size:13px;font-family:'DotGothic16',monospace;outline:none;margin-bottom:12px;box-sizing:border-box">
+    <label style="font-size:11px;color:var(--muted);font-family:'DotGothic16',monospace;display:block;margin-bottom:4px">Dans quel monde veux-tu le voir ?</label>
+    <select id="submit-world" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text);padding:9px;font-size:13px;font-family:'DotGothic16',monospace;outline:none;margin-bottom:14px;box-sizing:border-box">
+      <optgroup label="Mondes classiques">
+        <option value="1">Monde 1 — Mario</option>
+        <option value="2">Monde 2 — Zelda</option>
+        <option value="3">Monde 3 — Pokémon</option>
+        <option value="4">Monde 4 — Kirby</option>
+        <option value="5">Monde 5 — Metroid</option>
+        <option value="6">Monde 6 — Star Fox</option>
+        <option value="7">Monde 7 — Animal Crossing</option>
+        <option value="8">Monde 8 — Fire Emblem</option>
+        <option value="9">Monde 9 — Smash Bros</option>
+        <option value="10">Monde 10 — Donkey Kong</option>
+        <option value="11">Monde 11 — Fantasy</option>
+        <option value="12">Monde 12 — Espace</option>
+        <option value="13">Monde 13 — Créatures</option>
+        <option value="14">Monde 14 — Pirates</option>
+        <option value="15">Monde 15 — Robots</option>
+        <option value="16">Monde 16 — Animaux</option>
+        <option value="17">Monde 17 — Musique</option>
+        <option value="18">Monde 18 — Architecture</option>
+        <option value="19">Monde 19 — Mythologie</option>
+        <option value="20">Monde 20 — Galaxie</option>
+      </optgroup>
+      <optgroup label="Monde Spécial (custom)">
+        <option value="special:easy">Spécial — 😊 Facile</option>
+        <option value="special:medium">Spécial — 🌟 Moyen</option>
+        <option value="special:hard">Spécial — 💀 Difficile</option>
+        <option value="special:ultra">Spécial — ⚡ Ultra</option>
+      </optgroup>
+    </select>
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:8px;margin-bottom:12px">
+      <div style="font-size:10px;color:var(--muted);font-family:'DotGothic16',monospace;margin-bottom:4px">Code à coller dans le formulaire :</div>
+      <textarea id="submit-code" readonly style="width:100%;height:56px;background:transparent;border:none;color:var(--accent3);font-size:10px;font-family:monospace;resize:vertical;outline:none;box-sizing:border-box"></textarea>
+    </div>
+    <button onclick="editorCopySubmitCode()" style="width:100%;background:transparent;border:1px solid var(--accent3);color:var(--accent3);border-radius:7px;padding:9px;font-size:12px;cursor:pointer;font-family:'DotGothic16',monospace;margin-bottom:8px">📋 Copier le code</button>
+    <button onclick="editorOpenForm()" style="width:100%;background:linear-gradient(135deg,#5b8cff,#c084fc);color:#fff;border:none;border-radius:7px;padding:11px;font-size:13px;cursor:pointer;font-family:'DotGothic16',monospace;font-weight:700">🚀 Ouvrir le formulaire & envoyer</button>
+    <p style="font-size:9px;color:var(--muted);font-family:'DotGothic16',monospace;margin-top:8px;line-height:1.4">Le code (dessin + pseudo + monde) est copié automatiquement. Dans le formulaire, colle-le dans le champ prévu et valide. Merci pour ta création ! 🙏</p>
+  </div>
+</div>
+
 <div id="editor-overlay" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.82);align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto">
   <div style="background:var(--panel);border:1px solid var(--accent2);border-radius:16px;padding:18px 16px;max-width:520px;width:100%;box-shadow:0 0 40px rgba(244,114,182,.25);margin:auto">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
@@ -573,6 +623,9 @@ button{cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;border:none;
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
       <button onclick="editorTest()" style="flex:1;background:var(--accent3);color:#04231a;border:none;border-radius:7px;padding:8px;font-size:12px;cursor:pointer;font-family:'DotGothic16',monospace;font-weight:700">▶ Tester</button>
       <button onclick="editorExport()" style="flex:1;background:transparent;border:1px solid var(--accent);color:var(--accent);border-radius:7px;padding:8px;font-size:12px;cursor:pointer;font-family:'DotGothic16',monospace">📤 Exporter code</button>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+      <button onclick="editorOpenSubmit()" style="flex:1;min-width:160px;background:linear-gradient(135deg,#5b8cff,#c084fc);color:#fff;border:none;border-radius:7px;padding:10px;font-size:12px;cursor:pointer;font-family:'DotGothic16',monospace;font-weight:700">🌍 Soumettre à la communauté</button>
     </div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:stretch">
       <textarea id="editor-code" placeholder="Colle un code de dessin ici pour l'importer…" style="flex:1;min-width:160px;height:54px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:6px 8px;font-size:10px;font-family:monospace;outline:none;resize:vertical"></textarea>
@@ -618,16 +671,20 @@ const _ = 0, X = 1;
 // ── LVL 1 — 5×5 (×9) + 6×6 (boss) : MARIO — 11 variantes thématiques par puzzle ──
 // Chaque puzzle a variants:[v1,v2,...,v11] couvrant 11 icônes/personnages Mario
 const L1 = [
-  { name:"Champignon", variants:[[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,0,1,0],[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0]],[[0,0,1,1,0],[1,1,1,1,1],[0,1,1,1,1],[1,1,1,1,1],[0,0,1,1,0]]] },
-  { name:"Super Étoile", variants:[[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,0,1,0,0],[1,0,1,0,1],[0,1,1,1,0],[1,1,1,1,1],[0,0,1,0,0]],[[0,1,0,1,0],[0,0,1,1,0],[1,1,1,1,1],[0,0,1,1,0],[0,1,0,1,0]]] },
-  { name:"Pièce d'or", variants:[[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]]] },
-  { name:"Fleur de feu", variants:[[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,0,1,0,0],[0,0,1,0,0],[0,1,1,1,0],[1,1,1,1,1],[0,1,0,1,0]],[[0,0,0,1,0],[0,0,1,1,1],[1,1,1,1,0],[0,0,1,1,1],[0,0,0,1,0]]] },
-  { name:"Champignon 1UP", variants:[[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,0,1,0],[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[0,1,1,1,0]],[[0,0,1,1,0],[1,1,0,1,1],[0,1,1,1,1],[1,1,0,1,1],[0,0,1,1,0]]] },
-  { name:"Boo", variants:[[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0]],[[1,1,1,1,0],[0,1,1,0,1],[1,1,1,1,1],[0,1,1,0,1],[1,1,1,1,0]]] },
-  { name:"Bloc ?", variants:[[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]] },
-  { name:"Koopa", variants:[[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]],[[0,1,1,1,0],[1,1,0,1,1],[1,0,0,0,1],[1,1,0,1,1],[0,1,1,1,0]]] },
-  { name:"Goomba", variants:[[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[1,0,0,0,1]],[[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[0,0,1,0,0]],[[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],[[0,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0],[0,0,1,0,0]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[0,1,1,1,0],[0,1,0,1,0]],[[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1]],[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]],[[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[1,0,0,0,1]],[[1,0,0,0,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[0,1,1,1,0]],[[1,1,1,1,0],[0,1,0,1,1],[0,1,1,1,1],[0,1,0,1,1],[1,1,1,1,0]]] },
-  { name:"BOSS: Mario", isBoss:true, variants:[[[0,0,1,1,1,0],[0,1,1,1,1,1],[1,1,0,1,0,1],[1,1,1,1,1,1],[0,1,1,0,0,0],[0,1,0,1,0,0]],[[0,1,1,1,1,0],[1,1,1,1,1,1],[1,0,1,0,1,1],[1,1,1,1,1,1],[0,1,1,0,0,0],[0,1,1,1,0,0]],[[0,1,0,1,0,0],[1,1,1,1,1,0],[1,0,1,0,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,1,0,0,1,0]],[[1,0,0,0,0,1],[1,1,1,1,1,1],[1,0,1,0,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[1,0,1,1,0,1]],[[0,0,1,1,0,0],[0,1,1,1,1,0],[1,1,0,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,1,0,0,1,0]],[[1,1,0,0,1,1],[0,1,1,1,1,0],[1,0,1,0,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,1,0,0,1,0]],[[0,1,1,1,1,0],[1,1,1,1,1,1],[1,1,0,0,1,1],[1,1,1,1,1,1],[1,0,1,1,0,1],[0,1,1,1,1,0]],[[0,1,1,1,0,0],[1,1,1,1,1,0],[0,1,0,1,1,1],[1,1,1,1,1,1],[0,0,1,1,0,0],[0,1,0,0,1,0]],[[0,1,1,1,1,0],[1,1,1,1,1,1],[1,1,0,1,0,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[1,0,0,0,0,1]],[[1,1,0,0,0,0],[1,1,1,1,1,0],[0,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,0,1,0,1,0]],[[0,1,0,1,0,0],[1,1,1,1,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0],[0,1,0,1,1,0]]] }
+  { name:"Champignon", sol:[[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0],[0,0,0,1,1,0,0,1,1,0,0,1,1,0,0,0],[0,0,1,1,0,0,0,1,1,0,0,0,1,1,0,0],[0,1,1,1,0,0,1,1,1,1,0,0,1,1,1,0],[0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,0],[1,0,0,0,1,1,0,0,0,0,1,1,0,0,0,1],[1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1],[1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1],[1,0,0,1,1,0,0,0,0,0,0,1,1,0,0,1],[1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,1,1,0,0,1,0,0,1,0,0,1,1,0,0],[0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0]] },
+  { name:"Fleur de feu", sol:[[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,1,1,0,0,0,1,1,1,1,0,0,0,1,1,0],[1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0]] },
+  { name:"Super Étoile", sol:[[0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0],[0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0],[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0],[1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1],[1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1]] },
+  { name:"Pièce d'or", sol:[[0,0,0,1,1,1,1,0,0,0],[0,0,1,0,0,1,1,1,0,0],[0,1,0,1,1,1,1,1,1,0],[0,1,0,1,1,1,1,1,1,0],[1,0,1,1,0,0,1,1,1,1],[1,0,1,0,1,1,1,1,1,1],[1,0,1,0,1,1,1,1,1,1],[1,0,1,0,1,1,1,1,1,1],[1,0,1,0,1,1,1,1,1,1],[1,0,1,0,1,1,1,1,1,1],[1,0,1,0,1,1,1,1,1,1],[1,0,1,1,1,1,1,1,1,1],[0,1,0,1,1,1,1,1,1,0],[0,1,0,1,1,1,1,1,1,0],[0,0,1,0,1,1,1,1,0,0],[0,0,0,1,1,1,1,0,0,0]] },
+  { name:"Feuille P", sol:[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],[0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0],[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0]] },
+  { name:"Feuille Tanooki", sol:[[0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],[0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],[0,0,0,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],[0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],[0,0,0,0,0,0,1,1,1,0,0,0,0,0,0]] },
+  { name:"Costume Grenouille", sol:[[0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0],[0,0,1,1,1,1,1,0,0,1,1,1,1,1,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0]] },
+  { name:"Costume Tanooki", sol:[[0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,1,1,1,1,0,1,1,0,1,1,1,1,0,0],[0,0,1,1,1,1,0,1,1,0,1,1,1,1,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0],[1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1],[1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1],[1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0]] },
+  { name:"Costume Marto", sol:[[0,0,0,0,1,1,1,1,1,1,0,0,0,0],[0,0,0,1,1,1,1,1,1,1,1,0,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,1,1,1,1,1,0,0,1,1,1,1,1,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,1,1,1,0,1,1,0,1,1,1,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,0,1,1,1,1,1,1,1,1,0,0,0],[0,0,0,0,1,1,1,1,1,1,0,0,0,0]] },
+  { name:"Méga-Casque", sol:[[0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0],[0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],[1,0,0,0,0,1,1,1,1,1,1,1,1,0,1,1],[1,0,0,0,0,1,0,0,0,0,1,1,1,0,1,0],[1,0,0,0,0,1,1,1,1,1,1,1,1,0,1,0],[1,0,0,0,0,1,0,0,0,0,1,1,1,0,1,0],[1,0,0,0,0,1,0,0,0,0,1,1,1,1,1,0],[1,0,0,1,1,1,0,0,1,1,1,1,1,0,0,0],[1,0,1,1,1,1,0,1,1,1,1,1,1,0,0,0],[1,0,1,1,1,0,0,1,1,1,1,1,1,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0]] },
+  { name:"Colonne", sol:[[0,1,1,1,1,0],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[0,1,1,1,1,0]] },
+  { name:"Ancre", sol:[[0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0],[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0],[0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],[0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0],[0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0],[0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1],[1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1],[0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0]] },
+  { name:"Marteau", sol:[[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0],[0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1],[0,0,0,1,1,1,1,0,0,0,0,1,1,0,0,0],[0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1],[0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,0,0,0,1,1,1,1,1,1,0,1,1,1],[0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0]] },
+  { name:"BOSS: Boo", isBoss:true, sol:[[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0],[1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1],[1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1],[1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1],[1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0],[0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0],[0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,0]] }
 ];
 
 // ── LVL 2 — 6×6 (×9) + 7×7 (boss) : ZELDA — 11 variantes thématiques ──
@@ -1825,10 +1882,9 @@ function renderEditorGrid(){
 }
 
 // Format de partage : {n:nom, r:rows, c:cols, g:"lignes en hex bit-packing"} -> base64
-function editorEncode(){
+function editorEncode(extra){
   const name=(document.getElementById('editor-name').value||'Sans titre').slice(0,40);
   const r=editorState.rows, c=editorState.cols;
-  // bits par ligne -> chaîne binaire -> hex
   const rowsHex=editorState.grid.map(row=>{
     let bits=row.map(v=>v?'1':'0').join('');
     while(bits.length%4) bits+='0';
@@ -1836,6 +1892,8 @@ function editorEncode(){
     return hex;
   });
   const obj={n:name,r,c,g:rowsHex};
+  if(extra && extra.a!==undefined) obj.a=extra.a;   // auteur (créateur)
+  if(extra && extra.w!==undefined) obj.w=extra.w;   // monde cible
   return 'PCX1:'+btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
 }
 function editorDecode(code){
@@ -1850,7 +1908,7 @@ function editorDecode(code){
     return row;
   });
   while(grid.length<r) grid.push(Array(c).fill(0));
-  return {name:n||'Importé', rows:r, cols:c, grid};
+  return {name:n||'Importé', rows:r, cols:c, grid, author:obj.a, world:obj.w};
 }
 
 function editorExport(){
@@ -1861,6 +1919,52 @@ function editorExport(){
     try{ navigator.clipboard && navigator.clipboard.writeText(code); }catch(e){}
     editorMsg('✓ Code copié — partage-le à ta communauté !');
   }catch(e){ editorMsg('Erreur export : '+e.message,true); }
+}
+
+// ── Soumission communautaire ──
+const COMMUNITY_FORM_URL='https://forms.gle/a8XvEmpAaiptPvQt7';
+function editorRefreshSubmitCode(){
+  const author=(document.getElementById('submit-author').value||'').trim().slice(0,30);
+  const world=document.getElementById('submit-world').value;
+  const code=editorEncode({a:author||'Anonyme', w:world});
+  document.getElementById('submit-code').value=code;
+  return code;
+}
+function editorOpenSubmit(){
+  // Vérifier qu'il y a un dessin
+  if(!editorState.grid || !editorState.grid.some(r=>r.some(v=>v===1))){
+    editorMsg('Dessine quelque chose avant de soumettre.',true); return;
+  }
+  // Vérifier la solvabilité (unicité) — on prévient mais on ne bloque pas
+  const res=solveNonogram(editorState.grid);
+  const msg=document.getElementById('submit-solve-msg');
+  if(res.solved){ msg.textContent='✓ Solution unique — parfait pour un picross !'; msg.style.color='var(--accent3)'; }
+  else if(res.contradiction){ msg.textContent='✗ Dessin incohérent (ne devrait pas arriver).'; msg.style.color='#ef4444'; }
+  else { msg.textContent='⚠ Ce dessin a plusieurs solutions. Tu peux le soumettre, mais il sera moins «logique» à résoudre.'; msg.style.color='#f59e0b'; }
+  // Pré-remplir le pseudo avec le slot AP si connecté
+  const auth=document.getElementById('submit-author');
+  if(!auth.value && state.apSlot) auth.value=state.apSlot;
+  editorRefreshSubmitCode();
+  // recalculer le code à chaque changement
+  auth.oninput=editorRefreshSubmitCode;
+  document.getElementById('submit-world').onchange=editorRefreshSubmitCode;
+  document.getElementById('submit-overlay').style.display='flex';
+}
+function editorCloseSubmit(){ document.getElementById('submit-overlay').style.display='none'; }
+function editorCopySubmitCode(){
+  const code=editorRefreshSubmitCode();
+  const ta=document.getElementById('submit-code'); ta.select();
+  let ok=false;
+  try{ if(navigator.clipboard){ navigator.clipboard.writeText(code); ok=true; } }catch(e){}
+  if(!ok){ try{ document.execCommand('copy'); ok=true; }catch(e){} }
+  const msg=document.getElementById('submit-solve-msg');
+  msg.textContent= ok ? '📋 Code copié ! Ouvre le formulaire et colle-le.' : 'Sélectionne le code et copie-le manuellement.';
+  msg.style.color='var(--accent)';
+}
+function editorOpenForm(){
+  editorCopySubmitCode();
+  try{ window.open(COMMUNITY_FORM_URL,'_blank'); }
+  catch(e){ location.href=COMMUNITY_FORM_URL; }
 }
 function editorImport(){
   const code=document.getElementById('editor-code').value.trim();
